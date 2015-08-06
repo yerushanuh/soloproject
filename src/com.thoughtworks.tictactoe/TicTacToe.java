@@ -19,7 +19,11 @@ public class TicTacToe {
     public void printBoard() {
         printStream.println(" | | ");
         printStream.println("-----");
+        printStream.println(" | | ");
+        printStream.println("-----");
+        printStream.println(" | | ");
     }
 
-
+    public void promptUserForMove() {
+    }
 }

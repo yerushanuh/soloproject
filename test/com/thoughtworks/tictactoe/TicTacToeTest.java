@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.io.PrintStream;
 
 import static org.mockito.Matchers.contains;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by ynuh on 8/6/15.
@@ -25,9 +24,20 @@ public class TicTacToeTest {
     @Test
     public void shouldDrawBoardWhenStarting() {
         ticTacToe.start();
-        verify(printStream).println(contains(" | | "));
-        verify(printStream).println(contains("-----"));
+        verify(printStream, times(3)).println(contains(" | | "));
+        verify(printStream, times(2)).println(contains("-----"));
     }
 
+    @Test
+    public void shouldPromptPlayerOneToMakeAMoveWhenStarting() {
+        ticTacToe.start();
+        //verify(ticTacToe).promptUserForMove();
+    }
+
+//    @Test
+//    public void shouldDrawXWhenPlayerChoosesSquareToMove() {
+//        ticTacToe.start();
+//        verify(printStream).println(contains("X"));
+//    }
 
 }
