@@ -32,7 +32,7 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void shouldDrawBoardWhenStarting() throws IOException {
+    public void shouldInitiateEmptyBoardWhenStarting() throws IOException {
         when(reader.readLine()).thenReturn("1");
         ticTacToe.start();
         verify(board).print();
@@ -65,6 +65,14 @@ public class TicTacToeTest {
         ticTacToe.start();
         verify(printStream, atLeastOnce()).println(contains(PLAYER_2_PROMPT_MESSAGE));
     }
+
+//    @Test
+//    public void shouldDrawPreviouslyCompletedMovesWhenAPlayerEntersNewMove() throws IOException {
+//        when(reader.readLine()).thenReturn("1", "2");
+//        //ticTacToe.start();
+//        verify(board).move(1, 4);
+//        //verify(printStream, atLeastOnce()).println(contains("X| | "));
+//    }
 
 //    @Test
 //    public void shouldGetPlayerTwosMoveWhenPlayerTwoEntersMove() throws IOException {

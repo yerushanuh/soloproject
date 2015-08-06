@@ -26,7 +26,7 @@ public class BoardTest {
     @Test
     public void shouldDrawBoard() {
         board.print();
-        verify(printStream, times(2)).println(contains("-----"));
+        verify(printStream, atLeastOnce()).println(contains("-----"));
     }
 
     @Test
@@ -34,5 +34,12 @@ public class BoardTest {
         board.move(1, 4);
         verify(printStream, atLeastOnce()).println(contains(" | | "));
         verify(printStream).println(contains("X| | "));
+    }
+
+    @Test
+    public void shouldDrawAllMovesMadeSinceStartOfGameWhenDrawingBoard() {
+        board.move(1, 1);
+        board.move(2, 2);
+        verify(printStream, atLeastOnce()).println(contains("X|O| "));
     }
 }

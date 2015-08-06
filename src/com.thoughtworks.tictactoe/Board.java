@@ -8,26 +8,15 @@ import java.io.PrintStream;
 public class Board {
     private PrintStream printStream;
     private final int MAX_SIZE = 3;
+    private int[][] board;
 
     public Board(PrintStream printStream) {
         this.printStream = printStream;
+        board = new int[MAX_SIZE][MAX_SIZE];
     }
 
     public void print() {
-        printStream.println(" | | ");
-        printStream.println("-----");
-        printStream.println(" | | ");
-        printStream.println("-----");
-        printStream.println(" | | ");
-    }
-
-    public void move(int activeUser, int square) {
-        int[][] board = new int[MAX_SIZE][MAX_SIZE];
-        int row = (square - 1) / 3;
-        int column = (square % 3 == 0) ? 2 : (square % 3) - 1;
         String output = "";
-
-        board[row][column] = activeUser;
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -53,6 +42,15 @@ public class Board {
         }
 
         printStream.println(output);
+    }
+
+    public void move(int activeUser, int square) {
+        int row = (square - 1) / 3;
+        int column = (square % 3 == 0) ? 2 : (square % 3) - 1;
+
+        board[row][column] = activeUser;
+
+        print();
     }
 
 }
