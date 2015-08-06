@@ -59,4 +59,11 @@ public class Board {
     public boolean hasEmptySpace() {
         return !(occupiedSpace == 9);
     }
+
+    public boolean locationIsTaken(int square) {
+        int row = (square - 1) / 3;
+        int column = (square % 3 == 0) ? 2 : (square % 3) - 1;
+
+        return (board[row][column] != 0);
+    }
 }

@@ -79,6 +79,14 @@ public class TicTacToeTest {
         verify(board, times(10)).hasEmptySpace();
     }
 
+    @Test
+    public void shouldPromptUserToEnterAnotherMoveIfLocationIsAlreadyTaken() throws IOException {
+        when(reader.readLine()).thenReturn("1", "1", "2");
+        when(board.hasEmptySpace()).thenReturn(true, true, true, false);
+        when(board.locationIsTaken(1)).thenReturn(false, true, false, false);
+        ticTacToe.start();
+        verify(printStream).println(LOCATION_TAKEN_MESSAGE);
+    }
 
 //    @Test
 //    public void shouldPromptUserToEnterAnotherMoveIfLocationIsAlreadyTaken() throws IOException {

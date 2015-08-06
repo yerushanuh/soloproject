@@ -1,6 +1,5 @@
 package com.thoughtworks.tictactoe;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,5 +57,12 @@ public class BoardTest {
         board.move(2, 8);
         board.move(1, 9);
         assertFalse(board.hasEmptySpace());
+    }
+
+    @Test
+    public void shouldKnowWhenLocationIsAlreadyTaken() {
+        assertFalse(board.locationIsTaken(1));
+        board.move(1, 1);
+        assertTrue(board.locationIsTaken(1));
     }
 }

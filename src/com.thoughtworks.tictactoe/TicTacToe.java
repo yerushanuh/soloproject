@@ -27,13 +27,18 @@ public class TicTacToe {
 
         while (board.hasEmptySpace()) {
             input = promptUserForMove(activeUser);
-            board.move(activeUser, Integer.parseInt(input));
+            if (!board.locationIsTaken(Integer.parseInt(input))) {
+                board.move(activeUser, Integer.parseInt(input));
 
-            if (activeUser == 1) {
-                activeUser++;
+                if (activeUser == 1) {
+                    activeUser++;
+                }
+                else {
+                    activeUser--;
+                }
             }
             else {
-                activeUser--;
+                printStream.println("Location already taken");
             }
         }
     }
