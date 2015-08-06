@@ -41,6 +41,8 @@ public class TicTacToe {
                 printStream.println("Location already taken");
             }
         }
+
+        printStream.println("Game is a draw");
     }
 
     public String promptUserForMove(int activeUser) {

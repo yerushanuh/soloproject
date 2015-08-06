@@ -19,6 +19,7 @@ public class TicTacToeTest {
     private static final String PLAYER_2_PROMPT_MESSAGE = "PLAYER 2\n" +
             "Make a move by entering a number between 1 to 9:";
     private static final String LOCATION_TAKEN_MESSAGE = "Location already taken";
+    private static final String DRAW_MESSAGE = "Game is a draw";
     private TicTacToe ticTacToe;
     private PrintStream printStream;
     private BufferedReader reader;
@@ -77,6 +78,7 @@ public class TicTacToeTest {
         when(board.hasEmptySpace()).thenReturn(true, true, true, true, true, true, true, true, true, false);
         ticTacToe.start();
         verify(board, times(10)).hasEmptySpace();
+        verify(printStream).println(DRAW_MESSAGE);
     }
 
     @Test
@@ -87,11 +89,4 @@ public class TicTacToeTest {
         ticTacToe.start();
         verify(printStream).println(LOCATION_TAKEN_MESSAGE);
     }
-
-//    @Test
-//    public void shouldPromptUserToEnterAnotherMoveIfLocationIsAlreadyTaken() throws IOException {
-//        when(reader.readLine()).thenReturn("1", "1");
-//        ticTacToe.start();
-//        verify(printStream, atLeastOnce()).println(contains(LOCATION_TAKEN_MESSAGE));
-//    }
 }
