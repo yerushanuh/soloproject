@@ -21,12 +21,11 @@ public class TicTacToe {
     }
 
     public void start() {
-        boolean isAbleToContinueGame = true;
         String input;
 
         board.print();
 
-        while (isAbleToContinueGame) {
+        while (board.hasEmptySpace()) {
             input = promptUserForMove(activeUser);
             board.move(activeUser, Integer.parseInt(input));
 

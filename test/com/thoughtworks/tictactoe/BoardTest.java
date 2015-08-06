@@ -1,11 +1,12 @@
 package com.thoughtworks.tictactoe;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.PrintStream;
 
-import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.*;
@@ -41,5 +42,21 @@ public class BoardTest {
         board.move(1, 1);
         board.move(2, 2);
         verify(printStream, atLeastOnce()).println(contains("X|O| "));
+    }
+
+    @Test
+    public void shouldKnowWhenAllSpacesOccupied() {
+        board.move(1, 1);
+        board.move(2, 2);
+        assertTrue(board.hasEmptySpace());
+
+        board.move(1, 3);
+        board.move(2, 4);
+        board.move(1, 5);
+        board.move(2, 6);
+        board.move(1, 7);
+        board.move(2, 8);
+        board.move(1, 9);
+        assertFalse(board.hasEmptySpace());
     }
 }

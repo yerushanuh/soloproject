@@ -9,10 +9,12 @@ public class Board {
     private PrintStream printStream;
     private final int MAX_SIZE = 3;
     private int[][] board;
+    private int occupiedSpace;
 
     public Board(PrintStream printStream) {
         this.printStream = printStream;
         board = new int[MAX_SIZE][MAX_SIZE];
+        occupiedSpace = 0;
     }
 
     public void print() {
@@ -49,8 +51,12 @@ public class Board {
         int column = (square % 3 == 0) ? 2 : (square % 3) - 1;
 
         board[row][column] = activeUser;
+        occupiedSpace++;
 
         print();
     }
 
+    public boolean hasEmptySpace() {
+        return !(occupiedSpace == 9);
+    }
 }
