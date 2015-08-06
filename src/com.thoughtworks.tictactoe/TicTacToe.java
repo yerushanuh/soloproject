@@ -21,17 +21,22 @@ public class TicTacToe {
     }
 
     public void start() {
+        boolean isAbleToContinueGame = true;
         String input;
 
         board.print();
 
-        input = promptUserForMove(activeUser);
-        board.move(activeUser, Integer.parseInt(input));
+        while (isAbleToContinueGame) {
+            input = promptUserForMove(activeUser);
+            board.move(activeUser, Integer.parseInt(input));
 
-        activeUser++;
-
-        input = promptUserForMove(activeUser);
-        board.move(activeUser, Integer.parseInt(input));
+            if (activeUser == 1) {
+                activeUser++;
+            }
+            else {
+                activeUser--;
+            }
+        }
     }
 
     public String promptUserForMove(int activeUser) {
