@@ -8,26 +8,23 @@ import java.io.PrintStream;
  * Created by ynuh on 8/6/15.
  */
 public class TicTacToe {
+    private Board board;
     private BufferedReader reader;
     private PrintStream printStream;
 
-    public TicTacToe(PrintStream printStream, BufferedReader reader) {
+    public TicTacToe(PrintStream printStream, BufferedReader reader, Board board) {
         this.printStream = printStream;
         this.reader = reader;
+        this.board = board;
     }
 
     public void start() {
         String input;
-        printBoard();
-        input = promptUserForMove();
-    }
 
-    public void printBoard() {
-        printStream.println(" | | ");
-        printStream.println("-----");
-        printStream.println(" | | ");
-        printStream.println("-----");
-        printStream.println(" | | ");
+        board.print();
+
+        input = promptUserForMove();
+        board.move(Integer.parseInt(input));
     }
 
     public String promptUserForMove() {

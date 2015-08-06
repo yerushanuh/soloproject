@@ -14,40 +14,46 @@ import static org.mockito.Mockito.*;
  * Created by ynuh on 8/6/15.
  */
 public class TicTacToeTest {
+    private static final String PLAYER_1_PROMPT_MESSAGE = "PLAYER 1\n" +
+            "Make a move by entering a number between 1 to 9:";
     private TicTacToe ticTacToe;
     private PrintStream printStream;
     private BufferedReader reader;
+    private Board board;
 
     @Before
     public void setUp(){
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
-        ticTacToe = new TicTacToe(printStream, reader);
+        board = mock(Board.class);
+        ticTacToe = new TicTacToe(printStream, reader, board);
     }
 
     @Test
-    public void shouldDrawBoardWhenStarting() {
+    public void shouldDrawBoardWhenStarting() throws IOException {
+        when(reader.readLine()).thenReturn("1");
         ticTacToe.start();
-        verify(printStream, times(3)).println(contains(" | | "));
-        verify(printStream, times(2)).println(contains("-----"));
+        verify(board).print();
     }
 
     @Test
-    public void shouldPromptPlayerOneToMakeAMoveWhenStarting() {
+    public void shouldPromptPlayerOneToMakeAMoveWhenStarting() throws IOException {
+        when(reader.readLine()).thenReturn("1");
         ticTacToe.start();
-        verify(printStream).println(contains("PLAYER 1\nMake a move by entering a number between 1 to 9:"));
+        verify(printStream).println(contains(PLAYER_1_PROMPT_MESSAGE));
     }
 
     @Test
     public void shouldGetPlayerOnesMoveWhenPlayerOneEntersMove() throws IOException {
+        when(reader.readLine()).thenReturn("1");
         ticTacToe.start();
         verify(reader).readLine();
     }
 
-//    @Test
-//    public void shouldDrawXWhenPlayerChoosesSquareToMove() {
-//        ticTacToe.start();
-//        verify(printStream).println(contains("X"));
-//    }
-
+    @Test
+    public void shouldDrawXWhenPlayerChoosesSquareToMove() throws IOException {
+        when(reader.readLine()).thenReturn("4");
+        ticTacToe.start();
+        verify(board).move(4);
+    }
 }
