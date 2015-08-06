@@ -7,6 +7,7 @@ import java.io.PrintStream;
  */
 public class Board {
     private PrintStream printStream;
+    private final int MAX_SIZE = 3;
 
     public Board(PrintStream printStream) {
         this.printStream = printStream;
@@ -20,29 +21,38 @@ public class Board {
         printStream.println(" | | ");
     }
 
-    public void move(int square) {
+    public void move(int activeUser, int square) {
+        int[][] board = new int[MAX_SIZE][MAX_SIZE];
         int row = (square - 1) / 3;
+        int column = (square % 3 == 0) ? 2 : (square % 3) - 1;
+        String output = "";
 
-        for (int i = 0; i < row; i++) {
-            printStream.println(" | | ");
+        board[row][column] = activeUser;
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                switch(board[i][j]) {
+                    case 1:
+                        output += "X";
+                        break;
+                    case 2:
+                        output += "O";
+                        break;
+                    default:
+                        output += " ";
+                        break;
+                }
+
+                if (j < MAX_SIZE - 1) {
+                    output += "|";
+                }
+            }
+            if (i < MAX_SIZE - 1) {
+                output += "\n-----\n";
+            }
         }
 
-        switch(square % 3){
-            case 1:
-                printStream.println("X| | ");
-                break;
-            case 2:
-                printStream.println("|X| ");
-                break;
-            case 0:
-                printStream.println(" | |X");
-                break;
-            default:
-                break;
-        }
-
-        for (int i = 0; i < 3 - row - 1; i++) {
-            printStream.println(" | | ");
-        }
+        printStream.println(output);
     }
+
 }

@@ -11,11 +11,13 @@ public class TicTacToe {
     private Board board;
     private BufferedReader reader;
     private PrintStream printStream;
+    private int activeUser;
 
     public TicTacToe(PrintStream printStream, BufferedReader reader, Board board) {
         this.printStream = printStream;
         this.reader = reader;
         this.board = board;
+        this.activeUser = 1;
     }
 
     public void start() {
@@ -23,13 +25,18 @@ public class TicTacToe {
 
         board.print();
 
-        input = promptUserForMove();
-        board.move(Integer.parseInt(input));
+        input = promptUserForMove(activeUser);
+        board.move(activeUser, Integer.parseInt(input));
+
+        activeUser++;
+
+        input = promptUserForMove(activeUser);
+        board.move(activeUser, Integer.parseInt(input));
     }
 
-    public String promptUserForMove() {
+    public String promptUserForMove(int activeUser) {
         String input = "";
-        printStream.println("PLAYER 1\nMake a move by entering a number between 1 to 9:");
+        printStream.println("PLAYER " + activeUser + "\nMake a move by entering a number between 1 to 9:");
         try {
             input = reader.readLine();
         } catch (IOException e) {

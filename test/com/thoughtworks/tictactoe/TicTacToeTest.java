@@ -16,6 +16,8 @@ import static org.mockito.Mockito.*;
 public class TicTacToeTest {
     private static final String PLAYER_1_PROMPT_MESSAGE = "PLAYER 1\n" +
             "Make a move by entering a number between 1 to 9:";
+    private static final String PLAYER_2_PROMPT_MESSAGE = "PLAYER 2\n" +
+            "Make a move by entering a number between 1 to 9:";
     private TicTacToe ticTacToe;
     private PrintStream printStream;
     private BufferedReader reader;
@@ -47,13 +49,27 @@ public class TicTacToeTest {
     public void shouldGetPlayerOnesMoveWhenPlayerOneEntersMove() throws IOException {
         when(reader.readLine()).thenReturn("1");
         ticTacToe.start();
-        verify(reader).readLine();
+        verify(reader, atLeastOnce()).readLine();
     }
 
     @Test
-    public void shouldDrawXWhenPlayerChoosesSquareToMove() throws IOException {
+    public void shouldUpdateBoardWhenPlayerChoosesSquareToMove() throws IOException {
         when(reader.readLine()).thenReturn("4");
         ticTacToe.start();
-        verify(board).move(4);
+        verify(board).move(1, 4);
     }
+
+    @Test
+    public void shouldPromptPlayerTwoToMakeAMoveWhenPlayerOnesTurnIsComplete() throws IOException {
+        when(reader.readLine()).thenReturn("1", "2");
+        ticTacToe.start();
+        verify(printStream, atLeastOnce()).println(contains(PLAYER_2_PROMPT_MESSAGE));
+    }
+
+//    @Test
+//    public void shouldGetPlayerTwosMoveWhenPlayerTwoEntersMove() throws IOException {
+//        when(reader.readLine()).thenReturn("1");
+//        ticTacToe.start();
+//        verify(reader).readLine();
+//    }
 }
