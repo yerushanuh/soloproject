@@ -78,8 +78,7 @@ public class GameTest {
         when(reader.readLine()).thenReturn("1", "2", "3", "4", "5", "6", "7", "8", "9");
         when(board.hasEmptySpace()).thenReturn(true, true, true, true, true, true, true, true, true, false);
         game.start();
-        verify(board, times(10)).hasEmptySpace();
-        verify(printStream).println(DRAW_MESSAGE);
+        verify(printStream, times(5)).println("PLAYER 1\nMake a move by entering a number between 1 to 9:");
     }
 
     @Test

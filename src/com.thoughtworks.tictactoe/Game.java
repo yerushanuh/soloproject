@@ -12,40 +12,49 @@ public class Game {
     private BufferedReader reader;
     private PrintStream printStream;
     private int activeUser;
+    private boolean winnerFound;
 
     public Game(PrintStream printStream, BufferedReader reader, Board board) {
         this.printStream = printStream;
         this.reader = reader;
         this.board = board;
         this.activeUser = 1;
+        this.winnerFound = false;
     }
 
     public void start() {
-        String input;
-        boolean winnerFound = false;
-
         board.print();
 
         while (board.hasEmptySpace() && !winnerFound) {
-            input = promptUserForMove(activeUser);
-            if (!board.locationIsTaken(Integer.parseInt(input))) {
-                board.move(activeUser, Integer.parseInt(input));
-                winnerFound = checkWinnerFound();
-
-                if (activeUser == 1) {
-                    activeUser++;
-                }
-                else {
-                    activeUser--;
-                }
-            }
-            else {
-                printStream.println("Location already taken");
-            }
+            actOnInput(promptUserForMove(activeUser));
         }
 
+        checkIfDraw();
+    }
+
+    public void checkIfDraw() {
         if (!winnerFound) {
             printStream.println("Game is a draw");
+        }
+    }
+
+    public void actOnInput(String input) {
+        if (!board.locationIsTaken(Integer.parseInt(input))) {
+            board.move(activeUser, Integer.parseInt(input));
+            winnerFound = checkWinnerFound();
+            switchUser();
+        }
+        else {
+            printStream.println("Location already taken");
+        }
+    }
+
+    public void switchUser() {
+        if (activeUser == 1) {
+            activeUser++;
+        }
+        else {
+            activeUser--;
         }
     }
 
