@@ -22,13 +22,15 @@ public class TicTacToe {
 
     public void start() {
         String input;
+        boolean winnerFound = false;
 
         board.print();
 
-        while (board.hasEmptySpace()) {
+        while (board.hasEmptySpace() && !winnerFound) {
             input = promptUserForMove(activeUser);
             if (!board.locationIsTaken(Integer.parseInt(input))) {
                 board.move(activeUser, Integer.parseInt(input));
+                winnerFound = checkWinnerFound();
 
                 if (activeUser == 1) {
                     activeUser++;
@@ -43,6 +45,16 @@ public class TicTacToe {
         }
 
         printStream.println("Game is a draw");
+    }
+
+    public boolean checkWinnerFound() {
+        boolean winnerFound = false;
+        if (board.getWinner() != 0) {
+            printStream.println("Player " + board.getWinner() + " Wins!");
+            winnerFound = true;
+        }
+
+        return winnerFound;
     }
 
     public String promptUserForMove(int activeUser) {

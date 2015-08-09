@@ -20,6 +20,7 @@ public class TicTacToeTest {
             "Make a move by entering a number between 1 to 9:";
     private static final String LOCATION_TAKEN_MESSAGE = "Location already taken";
     private static final String DRAW_MESSAGE = "Game is a draw";
+    private static final String WIN_MESSAGE_PLAYER_1 = "Player 1 Wins!";
     private TicTacToe ticTacToe;
     private PrintStream printStream;
     private BufferedReader reader;
@@ -88,5 +89,12 @@ public class TicTacToeTest {
         when(board.locationIsTaken(1)).thenReturn(false, true, false, false);
         ticTacToe.start();
         verify(printStream).println(LOCATION_TAKEN_MESSAGE);
+    }
+
+    @Test
+    public void shouldDetectWinIfPlayerHasThreeInARow() throws IOException {
+        when(board.getWinner()).thenReturn(1);
+        ticTacToe.checkWinnerFound();
+        verify(printStream, atLeastOnce()).println(contains(WIN_MESSAGE_PLAYER_1));
     }
 }
