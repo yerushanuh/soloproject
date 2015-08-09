@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by ynuh on 8/6/15.
  */
-public class TicTacToeTest {
+public class GameTest {
     private static final String PLAYER_1_PROMPT_MESSAGE = "PLAYER 1\n" +
             "Make a move by entering a number between 1 to 9:";
     private static final String PLAYER_2_PROMPT_MESSAGE = "PLAYER 2\n" +
@@ -21,7 +21,7 @@ public class TicTacToeTest {
     private static final String LOCATION_TAKEN_MESSAGE = "Location already taken";
     private static final String DRAW_MESSAGE = "Game is a draw";
     private static final String WIN_MESSAGE_PLAYER_1 = "Player 1 Wins!";
-    private TicTacToe ticTacToe;
+    private Game game;
     private PrintStream printStream;
     private BufferedReader reader;
     private Board board;
@@ -31,13 +31,13 @@ public class TicTacToeTest {
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
         board = mock(Board.class);
-        ticTacToe = new TicTacToe(printStream, reader, board);
+        game = new Game(printStream, reader, board);
     }
 
     @Test
     public void shouldInitiateEmptyBoardWhenStarting() throws IOException {
         when(reader.readLine()).thenReturn("1");
-        ticTacToe.start();
+        game.start();
         verify(board).print();
     }
 
@@ -45,7 +45,7 @@ public class TicTacToeTest {
     public void shouldPromptPlayerOneToMakeAMoveWhenStarting() throws IOException {
         when(reader.readLine()).thenReturn("1");
         when(board.hasEmptySpace()).thenReturn(true, false);
-        ticTacToe.start();
+        game.start();
         verify(printStream).println(contains(PLAYER_1_PROMPT_MESSAGE));
     }
 
@@ -53,7 +53,7 @@ public class TicTacToeTest {
     public void shouldGetPlayerOnesMoveWhenPlayerOneEntersMove() throws IOException {
         when(reader.readLine()).thenReturn("1");
         when(board.hasEmptySpace()).thenReturn(true, false);
-        ticTacToe.start();
+        game.start();
         verify(reader, atLeastOnce()).readLine();
     }
 
@@ -61,7 +61,7 @@ public class TicTacToeTest {
     public void shouldUpdateBoardWhenPlayerChoosesSquareToMove() throws IOException {
         when(reader.readLine()).thenReturn("4");
         when(board.hasEmptySpace()).thenReturn(true, true, false);
-        ticTacToe.start();
+        game.start();
         verify(board).move(1, 4);
     }
 
@@ -69,7 +69,7 @@ public class TicTacToeTest {
     public void shouldPromptPlayerTwoToMakeAMoveWhenPlayerOnesTurnIsComplete() throws IOException {
         when(reader.readLine()).thenReturn("1", "2");
         when(board.hasEmptySpace()).thenReturn(true, true, false);
-        ticTacToe.start();
+        game.start();
         verify(printStream, atLeastOnce()).println(contains(PLAYER_2_PROMPT_MESSAGE));
     }
 
@@ -77,7 +77,7 @@ public class TicTacToeTest {
     public void shouldPromptPlayersToEnterMoveUntilBoardIsFilled() throws IOException {
         when(reader.readLine()).thenReturn("1", "2", "3", "4", "5", "6", "7", "8", "9");
         when(board.hasEmptySpace()).thenReturn(true, true, true, true, true, true, true, true, true, false);
-        ticTacToe.start();
+        game.start();
         verify(board, times(10)).hasEmptySpace();
         verify(printStream).println(DRAW_MESSAGE);
     }
@@ -87,14 +87,14 @@ public class TicTacToeTest {
         when(reader.readLine()).thenReturn("1", "1", "2");
         when(board.hasEmptySpace()).thenReturn(true, true, true, false);
         when(board.locationIsTaken(1)).thenReturn(false, true, false, false);
-        ticTacToe.start();
+        game.start();
         verify(printStream).println(LOCATION_TAKEN_MESSAGE);
     }
 
     @Test
     public void shouldDetectWinIfPlayerHasThreeInARow() throws IOException {
         when(board.getWinner()).thenReturn(1);
-        ticTacToe.checkWinnerFound();
+        game.checkWinnerFound();
         verify(printStream, atLeastOnce()).println(contains(WIN_MESSAGE_PLAYER_1));
     }
 }

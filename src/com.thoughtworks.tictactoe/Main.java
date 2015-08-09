@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Board board = new Board(System.out);
-        TicTacToe ticTacToe = new TicTacToe(System.out, reader, board);
-        ticTacToe.start();
+        Game game = new Game(System.out, reader, board);
+        game.start();
     }
 }
